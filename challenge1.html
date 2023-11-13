@@ -4,7 +4,58 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Editable Tables</title>
-    <link rel="stylesheet" href="E:\LEARNING\full stack devalaping\task1\challenge.css">
+    <style>body{
+        text-transform: capitalize;
+        background-color: #2dc2d9;
+        font-style: italic;
+        font-weight: bolder;
+    }
+    
+    table {
+        display: flex;   
+        border-collapse: collapse;
+        margin-left: 10%;
+        width: 100%;
+        margin-bottom: 6%;
+     ;
+    }
+    td {
+        font: weight 8px;;
+        border: 1px solid #5ae0d7;
+        text-align: left;
+        background-color: #9de0eb;
+    }
+    th {font-size:large;
+        border: 1px solid #ddd;
+        text-align: left;
+        background-color: #f2f2f2;
+    }
+    .div{
+        background-color: rgb(163, 238, 238);
+        border:solid #318f9e;
+        float: left;
+        width: 30%;
+        margin: 1%;
+    }
+    h2{
+        text-align: center;
+    }
+    h1{
+        font-weight: bolder;
+        text-align: center;
+    }
+    p{
+        position: fixed;
+        bottom: 1px;
+        right: 1px;
+        padding: 2%;
+        font-weight: bolder;
+        
+    }
+    button{
+        margin-left:65%;
+        margin-bottom: 3%;
+    }</style>
 </head>
 <body>
     <h1>user details</h1>
@@ -33,6 +84,62 @@
 <i class="fas fa-edit"></i>
 
 <p>created by jai</p>
-<script src="E:\LEARNING\full stack devalaping\task1\challenge.js"></script>
+<script>const jsonData = {
+    table1: [
+        { Name: "jai", Age: 20,job:"devoloper", City: "theni" },
+        { Name: "lucifer", Age: 18,job:"devoloper", City: "heven" },
+
+    ],
+    table2: [
+    { Name: "jai", Age: 20,job:"devoloper", City: "theni" },
+    { Name: "lucifer", Age: 18,job:"devoloper", City: "heven" },
+
+],
+    table3: [
+    { Name: "jai", Age: 20,job:"devoloper", City: "theni" },
+    { Name: "lucifer", Age: 18,job:"devoloper", City: "heven" },
+    ],
+};
+function popfunction(tableId, data) {
+    const table = document.getElementById(tableId);
+    table.innerHTML = "";  
+   
+
+    const headerRow = table.insertRow();
+    Object.keys(data[0]).forEach(key => {
+        const th = document.createElement("th");
+        th.textContent = key;
+        headerRow.appendChild(th);
+    });
+        data.forEach(rowData => {
+        const row = table.insertRow();
+        Object.values(rowData).forEach(value => {
+            const cell = row.insertCell();
+            cell.textContent = value;
+        });
+    });
+}
+
+function editTable(tableId) {
+    const table = document.getElementById(tableId);
+    const rows = table.rows;
+    
+    for (let i = 1; i < rows.length; i++) {
+        for (let j = 0; j < rows[i].cells.length; j++) {
+            const cell = rows[i].cells[j];
+            const oldValue = cell.textContent;
+            const newValue = prompt(`Enter new value for ${cell.parentNode.cells[0].textContent} in row ${i}`, oldValue);
+            if (newValue !== null) {
+                cell.textContent = newValue;
+                jsonData[tableId][i-1][cell.parentNode.cells[0].textContent] = newValue;
+            }
+        }
+    }
+}
+Object.keys(jsonData).forEach(tableId => {
+    popfunction(tableId, jsonData[tableId]);
+});
+
+</script>
 </body>
 </html>
